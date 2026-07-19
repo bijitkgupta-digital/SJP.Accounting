@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "SJP.Accounting.CLI": {
+      "commandName": "Project"
+    }
+  }
+}
