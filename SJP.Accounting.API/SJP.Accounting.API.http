@@ -1,0 +1,6 @@
+@SJP.Accounting.API_HostAddress = http://localhost:5278
+
+GET {{SJP.Accounting.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

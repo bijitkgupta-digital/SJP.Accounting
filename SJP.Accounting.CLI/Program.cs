@@ -62,8 +62,8 @@ internal class Program
     {
         return Host.CreateDefaultBuilder(args).ConfigureServices((context, services) =>
                 {
-                    services.AddServices(context.Configuration);
-                    services.AddInfrastructure(context.Configuration);
+                    services.AddApplicationServices(context.Configuration);
+                    services.AddInfrastructureServices(context.Configuration);
                     services.AddScoped<ITransactionSourceReader, ExcelTransactionSourceReader>();
                     services.AddScoped<IReportExporter<PartnerSettlementReportDocument>, PartnerSettlementPdfExporter>();
                     services.AddScoped<IReportExporter<BalanceSheetReportDocument>, BalanceSheetPdfExporter>();
