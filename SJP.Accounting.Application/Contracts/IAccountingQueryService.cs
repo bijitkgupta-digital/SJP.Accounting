@@ -1,4 +1,5 @@
-﻿using SJP.Accounting.Domain.ViewModels;
+﻿using SJP.Accounting.Domain.Entities;
+using SJP.Accounting.Domain.ViewModels;
 
 namespace SJP.Accounting.Application.Contracts;
 
@@ -15,4 +16,12 @@ public interface IAccountingQueryService
     Task<SettlementRecommendationViewModel> GetSettlementRecommendationAsync(CancellationToken cancellationToken);
 
     Task<IReadOnlyList<AllTransactionViewModel>> GetTransactionsAsync(CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<Project>> GetProjectsAsync(CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<Category>> GetCategoriesAsync(CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<Entity>> GetEntitiesAsync(CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<TransactionType>> GetTransactionTypesAsync(CancellationToken cancellationToken);
 }

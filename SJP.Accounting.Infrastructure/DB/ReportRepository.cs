@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SJP.Accounting.Domain.Contracts;
+using SJP.Accounting.Domain.Entities;
 using SJP.Accounting.Domain.ViewModels;
 
 namespace SJP.Accounting.Infrastructure.DB;
@@ -28,52 +29,58 @@ public sealed class ReportRepository : IReportRepository
     {
         _logger.LogInformation("Loading project profitability report data.");
 
-        return await _dbContext.ProjectProfitability
-            .AsNoTracking()
-            .OrderBy(x => x.ProjectName)
-            .ToListAsync(cancellationToken);
+        return await _dbContext.ProjectProfitability.AsNoTracking().OrderBy(x => x.ProjectName).ToListAsync(cancellationToken);
     }
 
     public async Task<List<PartnerCapitalPositionViewModel>> GetPartnerCapitalPositionAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Loading partner capital position report data.");
 
-        return await _dbContext.PartnerCapitalPositions
-            .AsNoTracking()
-            .OrderBy(x => x.Partner)
-            .ToListAsync(cancellationToken);
+        return await _dbContext.PartnerCapitalPositions.AsNoTracking().OrderBy(x => x.Partner).ToListAsync(cancellationToken);
     }
 
     public async Task<List<SettlementStatusViewModel>> GetSettlementStatusAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Loading settlement status report data.");
 
-        return await _dbContext.SettlementStatus
-            .AsNoTracking()
-            .OrderBy(x => x.Partner)
-            .ToListAsync(cancellationToken);
+        return await _dbContext.SettlementStatus.AsNoTracking().OrderBy(x => x.Partner).ToListAsync(cancellationToken);
     }
 
     public async Task<SettlementRecommendationViewModel?> GetSettlementRecommendationAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Loading settlement recommendation report data.");
 
-        return await _dbContext.SettlementRecommendations
-            .AsNoTracking()
-            .FirstOrDefaultAsync(cancellationToken);
+        return await _dbContext.SettlementRecommendations.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<List<AllTransactionViewModel>> GetAllTransactionsAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Loading transaction ledger report data.");
 
-        var result = await _dbContext.AllTransactions
-            .AsNoTracking()
-            .OrderByDescending(x => x.TransactionDate)
-            .ToListAsync(cancellationToken);
+        var result = await _dbContext.AllTransactions.AsNoTracking().OrderByDescending(x => x.TransactionDate).ToListAsync(cancellationToken);
 
         _logger.LogInformation("Loaded {Count} transactions.", result.Count);
 
         return result;
+    }
+
+    public async Task<IReadOnlyList<Project>> GetProjectsAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Projects.AsNoTracking().OrderBy(x => x.ProjectName).ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<Category>> GetCategoriesAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Categories.AsNoTracking().OrderBy(x => x.CategoryName).ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<Entity>>GetEntitiesAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Entities.AsNoTracking().OrderBy(x => x.EntityName).ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<TransactionType>> GetTransactionTypesAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.TransactionTypes.AsNoTracking().OrderBy(x => x.TransactionTypeName).ToListAsync(cancellationToken);
     }
 }

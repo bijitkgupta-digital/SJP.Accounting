@@ -52,26 +52,19 @@ public class ApplicationDbContext : DbContext
 
     private static void ConfigureTables(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Partner>()
-            .HasKey(x => x.PartnerId);
+        modelBuilder.Entity<Partner>().HasKey(x => x.PartnerId);
 
-        modelBuilder.Entity<Project>()
-            .HasKey(x => x.ProjectId);
+        modelBuilder.Entity<Project>().HasKey(x => x.ProjectId);
 
-        modelBuilder.Entity<Category>()
-            .HasKey(x => x.CategoryId);
+        modelBuilder.Entity<Category>().HasKey(x => x.CategoryId);
 
-        modelBuilder.Entity<Entity>()
-            .HasKey(x => x.EntityId);
+        modelBuilder.Entity<Entity>().HasKey(x => x.EntityId);
 
-        modelBuilder.Entity<TransactionType>()
-            .HasKey(x => x.TransactionTypeId);
+        modelBuilder.Entity<TransactionType>().HasKey(x => x.TransactionTypeId);
 
-        modelBuilder.Entity<TransactionMaster>()
-            .HasKey(x => x.TransactionId);
+        modelBuilder.Entity<TransactionMaster>().HasKey(x => x.TransactionId);
 
-        modelBuilder.Entity<Asset>()
-            .HasKey(x => x.AssetId);
+        modelBuilder.Entity<Asset>().HasKey(x => x.AssetId);
 
         // existing code below...
         modelBuilder.Entity<Project>()

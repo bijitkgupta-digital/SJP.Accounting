@@ -10,9 +10,7 @@ public sealed class ReportController : ControllerBase
     private readonly IEnumerable<ISJPAccountingReport> _reports;
 
     public ReportController(IEnumerable<ISJPAccountingReport> reports)
-    {
-        _reports = reports;
-    }
+        => _reports = reports;
 
     [HttpGet]
     public IActionResult GetReports()
