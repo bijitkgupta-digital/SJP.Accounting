@@ -32,9 +32,7 @@ public sealed class TransactionImportService : ITransactionService
         _logger = logger;
     }
 
-    public async Task<ImportResultDto> ProcessAsync(
-    IEnumerable<TransactionImportDto> transactions,
-    CancellationToken cancellationToken)
+    public async Task<ImportResultDto> ProcessAsync(IEnumerable<TransactionImportDto> transactions, CancellationToken cancellationToken)
     {
         var result = new ImportResultDto();
 
@@ -46,29 +44,23 @@ public sealed class TransactionImportService : ITransactionService
 
             var importedOn = DateTime.UtcNow;
 
-            _logger.LogInformation(
-                "Starting transaction processing. Total Rows : {TotalRows}",
-                result.TotalRows);
+            _logger.LogInformation("Starting transaction processing. Total Rows : {TotalRows}", result.TotalRows);
 
-            var projects = (await _projectRepository.ListAsync())
-                .ToDictionary(
+            var projects = (await _projectRepository.ListAsync()).ToDictionary(
                     x => x.ProjectName,
                     StringComparer.OrdinalIgnoreCase);
 
-            var categories = (await _categoryRepository.ListAsync())
-                .ToDictionary(
+            var categories = (await _categoryRepository.ListAsync()).ToDictionary(
                     x => x.CategoryName,
                     StringComparer.OrdinalIgnoreCase);
 
             var transactionTypes =
-                (await _transactionTypeRepository.ListAsync())
-                .ToDictionary(
+                (await _transactionTypeRepository.ListAsync()).ToDictionary(
                     x => x.TransactionTypeName,
                     StringComparer.OrdinalIgnoreCase);
 
             var entityCache =
-                (await _entityRepository.ListAsync())
-                .ToDictionary(
+                (await _entityRepository.ListAsync()).ToDictionary(
                     x => x.EntityName,
                     StringComparer.OrdinalIgnoreCase);
 
@@ -79,18 +71,14 @@ public sealed class TransactionImportService : ITransactionService
 
             var newEntities = new List<Entity>();
 
-            var transactionsToInsert =
-                new List<TransactionMaster>();
+            var transactionsToInsert = new List<TransactionMaster>();
 
             int importedRows = 0;
             int duplicateRows = 0;
 
-            for (int rowNumber = 1;
-                 rowNumber <= transactionList.Count;
-                 rowNumber++)
+            for (int rowNumber = 1; rowNumber <= transactionList.Count; rowNumber++)
             {
-                var transaction =
-                    transactionList[rowNumber - 1];
+                var transaction = transactionList[rowNumber - 1];
 
                 try
                 {
