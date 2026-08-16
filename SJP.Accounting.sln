@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJP.Accounting.Domain", "SJP.Accounting.Domain\SJP.Accounting.Domain.csproj", "{6E89CE3E-1A92-416C-BD63-5963503E7C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJP.Accounting.Domain", "SJP.Accounting.Domain\SJP.Accounting.Domain.csproj", "{6E89CE3E-1A92-416C-BD63-5963503E7C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJP.Accounting.Infrastructure", "SJP.Accounting.Infrastructure\SJP.Accounting.Infrastructure.csproj", "{500E1CDD-A911-4702-BA75-378263061994}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJP.Accounting.Infrastructure", "SJP.Accounting.Infrastructure\SJP.Accounting.Infrastructure.csproj", "{500E1CDD-A911-4702-BA75-378263061994}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJP.Accounting.Application", "SJP.Accounting.Application\SJP.Accounting.Application.csproj", "{4895E360-D02B-43D9-B46C-D4CBDEF95D2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJP.Accounting.Application", "SJP.Accounting.Application\SJP.Accounting.Application.csproj", "{4895E360-D02B-43D9-B46C-D4CBDEF95D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJP.Accounting.CLI", "SJP.Accounting.CLI\SJP.Accounting.CLI.csproj", "{6A993E60-3EC8-43D8-8CEF-F957017A5150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJP.Accounting.CLI", "SJP.Accounting.CLI\SJP.Accounting.CLI.csproj", "{6A993E60-3EC8-43D8-8CEF-F957017A5150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SJP.Accounting.API", "SJP.Accounting.API\SJP.Accounting.API.csproj", "{20310346-1694-4D77-99F4-096DD0470903}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SJP.Accounting.API", "SJP.Accounting.API\SJP.Accounting.API.csproj", "{20310346-1694-4D77-99F4-096DD0470903}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts&Templates", "Scripts&Templates", "{796AD380-93B0-47A6-A827-C2F9197D2DF7}"
+	ProjectSection(SolutionItems) = preProject
+		SwijitAccounting_MasterSetup.sql = SwijitAccounting_MasterSetup.sql
+		Swijit_Transaction_Template.xlsx = Swijit_Transaction_Template.xlsx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
