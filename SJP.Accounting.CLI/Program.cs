@@ -21,7 +21,7 @@ internal class Program
         {
             if (args.Length == 0)
             {
-                await ExecuteSyncCommandAsync(host.Services, "C:\\Bijit\\SJP\\Swijit_Transaction_Template.xlsx");
+                await ExecuteSyncCommandAsync(host.Services, "C:\\bijitkgupta-digital@github.com\\SJP.Accounting\\Swijit_Transaction_Template.xlsx");
                 await ExecuteReportCommandAsync(host.Services);
             }
             else

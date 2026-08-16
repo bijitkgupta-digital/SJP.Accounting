@@ -46,23 +46,10 @@ public sealed class TransactionImportService : ITransactionService
 
             _logger.LogInformation("Starting transaction processing. Total Rows : {TotalRows}", result.TotalRows);
 
-            var projects = (await _projectRepository.ListAsync()).ToDictionary(
-                    x => x.ProjectName,
-                    StringComparer.OrdinalIgnoreCase);
-
-            var categories = (await _categoryRepository.ListAsync()).ToDictionary(
-                    x => x.CategoryName,
-                    StringComparer.OrdinalIgnoreCase);
-
-            var transactionTypes =
-                (await _transactionTypeRepository.ListAsync()).ToDictionary(
-                    x => x.TransactionTypeName,
-                    StringComparer.OrdinalIgnoreCase);
-
-            var entityCache =
-                (await _entityRepository.ListAsync()).ToDictionary(
-                    x => x.EntityName,
-                    StringComparer.OrdinalIgnoreCase);
+            var projects = (await _projectRepository.ListAsync()).ToDictionary(x => x.ProjectName, StringComparer.OrdinalIgnoreCase);
+            var categories = (await _categoryRepository.ListAsync()).ToDictionary(x => x.CategoryName, StringComparer.OrdinalIgnoreCase);
+            var transactionTypes = (await _transactionTypeRepository.ListAsync()).ToDictionary(x => x.TransactionTypeName, StringComparer.OrdinalIgnoreCase);
+            var entityCache = (await _entityRepository.ListAsync()).ToDictionary(x => x.EntityName, StringComparer.OrdinalIgnoreCase);
 
             var existingHashes =
                 (await _transactionRepository.ListAsync())
@@ -136,9 +123,7 @@ public sealed class TransactionImportService : ITransactionService
 
                     #endregion
 
-                    if (!projects.TryGetValue(
-                            transaction.ProjectName,
-                            out var project))
+                    if (!projects.TryGetValue(transaction.ProjectName, out var project))
                     {
                         AddImportError(
                             result,
@@ -150,9 +135,7 @@ public sealed class TransactionImportService : ITransactionService
                         continue;
                     }
 
-                    if (!categories.TryGetValue(
-                            transaction.CategoryName,
-                            out var category))
+                    if (!categories.TryGetValue(transaction.CategoryName, out var category))
                     {
                         AddImportError(
                             result,
@@ -164,9 +147,7 @@ public sealed class TransactionImportService : ITransactionService
                         continue;
                     }
 
-                    if (!transactionTypes.TryGetValue(
-                            transaction.TransactionType,
-                            out var transactionType))
+                    if (!transactionTypes.TryGetValue(transaction.TransactionType, out var transactionType))
                     {
                         AddImportError(
                             result,
@@ -178,19 +159,9 @@ public sealed class TransactionImportService : ITransactionService
                         continue;
                     }
 
-                    var paidByEntity =
-                        GetOrCreateEntity(
-                            transaction.PaidByType,
-                            transaction.PaidBy,
-                            entityCache,
-                            newEntities);
+                    var paidByEntity = GetOrCreateEntity(transaction.PaidByType, transaction.PaidBy, entityCache, newEntities);
 
-                    var receivedByEntity =
-                        GetOrCreateEntity(
-                            transaction.ReceivedByType,
-                            transaction.ReceivedBy,
-                            entityCache,
-                            newEntities);
+                    var receivedByEntity = GetOrCreateEntity(transaction.ReceivedByType, transaction.ReceivedBy, entityCache, newEntities);
 
                     var hash = transaction.HashValue;
 
@@ -202,8 +173,7 @@ public sealed class TransactionImportService : ITransactionService
 
                     existingHashes.Add(hash);
 
-                    transactionsToInsert.Add(
-                        new TransactionMaster
+                    transactionsToInsert.Add(new TransactionMaster
                         {
                             TransactionDate = transaction.TransactionDate,
 
@@ -211,15 +181,13 @@ public sealed class TransactionImportService : ITransactionService
 
                             CategoryId = category.CategoryId,
 
-                            TransactionTypeId =
-                                transactionType.TransactionTypeId,
+                            TransactionTypeId = transactionType.TransactionTypeId,
 
                             Amount = transaction.Amount,
 
                             Narration = transaction.Narration,
 
-                            GoogleDriveLink =
-                                transaction.GoogleDriveLink,
+                            GoogleDriveLink = transaction.GoogleDriveLink,
 
                             TransactionHash = hash,
 
@@ -227,40 +195,28 @@ public sealed class TransactionImportService : ITransactionService
 
                             PaidByEntity = paidByEntity,
 
-                            ReceivedByEntity =
-                                receivedByEntity
+                            ReceivedByEntity = receivedByEntity
                         });
 
                     importedRows++;
                 }
                 catch (Exception ex)
                 {
-                    AddImportError(
-                        result,
-                        rowNumber,
-                        "System",
-                        string.Empty,
-                        ex.Message);
-
-                    _logger.LogError(
-                        ex,
-                        "Error processing row {RowNumber}",
-                        rowNumber);
+                    AddImportError(result, rowNumber, "System", string.Empty, ex.Message);
+                    _logger.LogError(ex, "Error processing row {RowNumber}", rowNumber);
                 }
             }
 
             if (newEntities.Count > 0)
             {
-                await _entityRepository.AddRangeAsync(
-                    newEntities);
+                await _entityRepository.AddRangeAsync(newEntities);
 
                 await _entityRepository.SaveChangesAsync();
             }
 
             if (transactionsToInsert.Count > 0)
             {
-                await _transactionRepository.AddRangeAsync(
-                    transactionsToInsert);
+                await _transactionRepository.AddRangeAsync(transactionsToInsert);
 
                 await _transactionRepository.SaveChangesAsync();
             }
@@ -270,20 +226,15 @@ public sealed class TransactionImportService : ITransactionService
             result.ErrorRows = result.ImportErrors.Count;
             result.Success = true;
 
-            result.Message =
-                $"Processed={result.TotalRows}, Imported={importedRows}, Duplicates={duplicateRows}, Errors={result.ErrorRows}";
+            result.Message = $"Processed={result.TotalRows}, Imported={importedRows}, Duplicates={duplicateRows}, Errors={result.ErrorRows}";
 
             return result;
         }
         catch (Exception ex)
         {
-            _logger.LogError(
-                ex,
-                "Transaction processing failed.");
-
+            _logger.LogError(ex, "Transaction processing failed.");
             result.Success = false;
             result.Message = ex.Message;
-
             return result;
         }
     }

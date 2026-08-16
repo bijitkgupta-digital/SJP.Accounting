@@ -6,17 +6,17 @@
 USE master;
 GO
 
-IF DB_ID('[SJP.Accounting]') IS NOT NULL
+IF DB_ID('[SJP_Accounting]') IS NOT NULL
 BEGIN
-    ALTER DATABASE [SJP.Accounting] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [SJP.Accounting];
+    ALTER DATABASE [SJP_Accounting] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [SJP_Accounting];
 END
 GO
 
-CREATE DATABASE [SJP.Accounting];
+CREATE DATABASE [SJP_Accounting];
 GO
 
-USE [SJP.Accounting];
+USE [SJP_Accounting];
 GO
 
 /* DROP OBJECTS */

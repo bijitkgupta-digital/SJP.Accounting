@@ -6,9 +6,7 @@ namespace SJP.Accounting.Infrastructure.DB;
 
 public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 
@@ -114,28 +112,16 @@ public class ApplicationDbContext : DbContext
 
     private static void ConfigureViews(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AllTransactionViewModel>()
-            .HasNoKey()
-            .ToView("vw_AllTransactions");
+        modelBuilder.Entity<AllTransactionViewModel>().HasNoKey().ToView("vw_AllTransactions");
 
-        modelBuilder.Entity<DashboardViewModel>()
-            .HasNoKey()
-            .ToView("vw_Dashboard");
+        modelBuilder.Entity<DashboardViewModel>().HasNoKey().ToView("vw_Dashboard");
 
-        modelBuilder.Entity<ProjectProfitabilityViewModel>()
-            .HasNoKey()
-            .ToView("vw_ProjectProfitability");
+        modelBuilder.Entity<ProjectProfitabilityViewModel>().HasNoKey().ToView("vw_ProjectProfitability");
 
-        modelBuilder.Entity<PartnerCapitalPositionViewModel>()
-            .HasNoKey()
-            .ToView("vw_PartnerCapitalPosition");
+        modelBuilder.Entity<PartnerCapitalPositionViewModel>().HasNoKey().ToView("vw_PartnerCapitalPosition");
 
-        modelBuilder.Entity<SettlementStatusViewModel>()
-            .HasNoKey()
-            .ToView("vw_SettlementStatus");
+        modelBuilder.Entity<SettlementStatusViewModel>().HasNoKey().ToView("vw_SettlementStatus");
 
-        modelBuilder.Entity<SettlementRecommendationViewModel>()
-            .HasNoKey()
-            .ToView("vw_SettlementRecommendation");
+        modelBuilder.Entity<SettlementRecommendationViewModel>().HasNoKey().ToView("vw_SettlementRecommendation");
     }
 }
